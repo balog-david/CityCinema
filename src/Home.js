@@ -1,0 +1,15 @@
+import LatestFilms from "./LatestFilms";
+import useFetch from "./useFetch";
+
+const Home = () => {
+    const { data:films, isPending, error } = useFetch('http://localhost:3001/movies');
+    return (
+        <div className="home">
+            {error && <div>{ error }</div>}
+            {isPending && <div>Betöltés...</div>}
+            {films && films.length!==0 && <LatestFilms films={films} title="Legújabbak a vásznon!" />}
+        </div>
+    );
+}
+ 
+export default Home;
