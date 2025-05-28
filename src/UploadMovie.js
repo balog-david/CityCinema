@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const UploadMovie = () => {
@@ -102,7 +102,7 @@ const UploadMovie = () => {
             body: JSON.stringify(movieToSend)
         })
         .then(res => res.json())
-        .then(data => {
+        .then(() => {
             alert(isEditing ? 'A film sikeresen frissítve!' : 'A film sikeresen feltöltve!');
             setMovie({
                 title: "", body: "", author: "", image: "", link: "", description: "", cast: ""

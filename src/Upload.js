@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Upload = () => {
@@ -61,7 +61,7 @@ const Upload = () => {
       body: JSON.stringify(screeningObjects)
     })
       .then(res => res.json())
-      .then(data => {
+      .then(() => {
         setRefreshKey(prev => prev + 1);
       })
       .catch(err => {
@@ -144,7 +144,7 @@ const Upload = () => {
   return (
     <div className="screening-upload-container">
       <div className="list-screenings">
-        {screeningList.map((screening, index) => (
+        {screeningList.map((screening) => (
           <div className="screening" key={screening._id}>
             <h3>{screening.name }</h3>
             <p>{screening.date}</p>

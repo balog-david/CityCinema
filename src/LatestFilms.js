@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const LatestFilms = ({ films, title }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -92,6 +93,11 @@ const LatestFilms = ({ films, title }) => {
             </div>
         </div>
     );
+};
+
+LatestFilms.propTypes = {
+    films: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired
 };
 
 export default LatestFilms;

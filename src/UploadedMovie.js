@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 
 const UploadedMovie = ({ movie }) => {
     const [movies, setMovies] = useState([]);
@@ -50,6 +51,10 @@ const UploadedMovie = ({ movie }) => {
         </div>
         </div>
     );
+};
+
+UploadedMovie.propTypes = {
+    movie: PropTypes.array.isRequired,
 };
 
 export default UploadedMovie;

@@ -41,7 +41,7 @@ const BookingSummary = () => {
             }
             return res.json();
         })
-        .then(data => {
+        .then(() => {
             setIsSubmitted(true);
             localStorage.removeItem('reservations');
         })

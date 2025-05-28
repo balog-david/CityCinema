@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 export const ReservationContext = createContext();
 
@@ -30,4 +31,9 @@ export const ReservationProvider = ({ children }) => {
       {children}
     </ReservationContext.Provider>
   );
+
+};
+
+ReservationProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

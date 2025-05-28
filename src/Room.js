@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import useFetch from './useFetch';
 import { ReservationContext } from './ReservationContext';
+import PropTypes from 'prop-types';
 
 const generateToken = () =>
   'xxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -188,5 +189,9 @@ const Room = ({ screeningId }) => {
     </div>
   );
 };
+
+Room.propTypes = {
+  screeningId: PropTypes.string.isRequired,
+}
 
 export default Room;

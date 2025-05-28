@@ -1,3 +1,4 @@
+import React from 'react'
 import LatestFilms from "./LatestFilms";
 import useFetch from "./useFetch";
 

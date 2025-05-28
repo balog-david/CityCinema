@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const AllFilms = ({ films = [], screenings = [], title }) => {
@@ -97,6 +98,12 @@ const AllFilms = ({ films = [], screenings = [], title }) => {
       })}
     </div>
   );
+};
+
+AllFilms.propTypes = {
+  films: PropTypes.array.isRequired,
+  screenings: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default AllFilms;

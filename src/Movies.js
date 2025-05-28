@@ -1,3 +1,5 @@
+import React from 'react'
+
 import AllFilms from "./AllFilms";
 import useFetch from "./useFetch";
 
