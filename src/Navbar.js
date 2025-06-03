@@ -6,7 +6,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    fetch('http://localhost:3001/logout', {
+    fetch(`${process.env.REACT_APP_API_URL}/logout`, {
       method: 'POST',
       credentials: 'include'
     })
@@ -27,7 +27,8 @@ const Navbar = () => {
 
   useEffect(() => {
     const storedToken = localStorage.getItem('userToken');
-    fetch(`http://localhost:3001/tickets/${storedToken}`)
+    if (!storedToken) return;
+    fetch(`${process.env.REACT_APP_API_URL}/tickets/${storedToken}`)
       .then(res => res.json())
       .then(data => {
         if(!data.reservedSeatsCount) {

@@ -11,7 +11,7 @@ const BookingSummary = () => {
             telephone: ""
         }
     );
-    const {data: tickets, isPending, error} = useFetch(`http://localhost:3001/screenings/bytoken/${storedToken}`);
+    const {data: tickets, isPending, error} = useFetch(`process.env.REACT_APP_API_URL/screenings/bytoken/${storedToken}`);
     console.log(tickets)
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -30,7 +30,7 @@ const BookingSummary = () => {
             telephone: bookingData.telephone,
             tickets: tickets
         };
-        fetch('http://localhost:3001/sendmail', {
+        fetch(`${process.env.REACT_APP_API_URL}/sendmail`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload)

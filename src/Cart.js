@@ -8,7 +8,7 @@ const Cart = () => {
   const rawReservations = localStorage.getItem('reservations');
   const [reservations, setReservations] = useState(JSON.parse(rawReservations || "{}"));
 
-  const { data: tickets, isPending, error } = useFetch(`http://localhost:3001/screenings/bytoken/${storedToken}`);
+  const { data: tickets, isPending, error } = useFetch(`${process.env.REACT_APP_API_URL}/screenings/bytoken/${storedToken}`);
   const [localTickets, setLocalTickets] = useState([]);
 
   const { updateTicketCount } = useContext(ReservationContext);
@@ -16,7 +16,7 @@ const Cart = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    const socket = new WebSocket('ws://localhost:3001');
+    const socket = new WebSocket(process.env.REACT_APP_WS_URL);
     socketRef.current = socket;
 
     socket.onopen = () => console.log('WebSocket kapcsolat létrejött');
@@ -44,7 +44,7 @@ const Cart = () => {
     until: ""
   };
 
-  fetch(`http://localhost:3001/tickets/${ticketId}/seats/${seatId}`, {
+  fetch(`${process.env.REACT_APP_API_URL}/tickets/${ticketId}/seats/${seatId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

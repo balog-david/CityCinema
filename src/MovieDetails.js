@@ -4,7 +4,7 @@ import useFetch from "./useFetch";
 
 const MovieDetails = () => {
   const { link } = useParams();
-  const { data: film, error, isPending } = useFetch('http://localhost:3001/movies/' + link);
+  const { data: film, error, isPending } = useFetch(`${process.env.REACT_APP_API_URL}/movies/` + link);
 
   return (
     <div className="movie-details">

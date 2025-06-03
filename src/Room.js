@@ -13,7 +13,7 @@ const generateToken = () =>
 const Room = ({ screeningId }) => {
   const [seats, setSeats] = useState([]);
   const socketRef = useRef(null);
-  const { data, isPending, error } = useFetch(`http://localhost:3001/screenings/${screeningId}`);
+  const { data, isPending, error } = useFetch(`${process.env.REACT_APP_API_URL}/screenings/${screeningId}`);
   const [userToken] = useState(() => {
     const storedToken = localStorage.getItem('userToken');
     if (storedToken) return storedToken;
@@ -121,7 +121,7 @@ const Room = ({ screeningId }) => {
       until: newStatus === 'reserved' ? Date.now() + 10 * 60 * 1000 : null
     };
 
-    fetch(`http://localhost:3001/screenings/${screeningId}/seats/${seat.id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/screenings/${screeningId}/seats/${seat.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

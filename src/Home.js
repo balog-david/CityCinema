@@ -3,7 +3,7 @@ import LatestFilms from "./LatestFilms";
 import useFetch from "./useFetch";
 
 const Home = () => {
-    const { data:films, isPending, error } = useFetch('http://localhost:3001/movies');
+    const { data:films, isPending, error } = useFetch(`${process.env.REACT_APP_API_URL}/movies`);
     return (
         <div className="home">
             {error && <div>{ error }</div>}

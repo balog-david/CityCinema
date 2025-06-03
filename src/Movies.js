@@ -5,8 +5,8 @@ import useFetch from "./useFetch";
 
 
 const Movies = () => {
-    const { data:films, isPending_1, error_1 } = useFetch('http://localhost:3001/movies');
-    const { data:screenings, isPending_2, error_2}  = useFetch('http://localhost:3001/screenings')
+    const { data:films, isPending_1, error_1 } = useFetch(`${process.env.REACT_APP_API_URL}/movies`);
+    const { data:screenings, isPending_2, error_2}  = useFetch(`${process.env.REACT_APP_API_URL}/screenings`)
     
     return (
         <div className="movies">

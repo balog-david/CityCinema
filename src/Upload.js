@@ -18,7 +18,7 @@ const Upload = () => {
   const [refreshKey, setRefreshKey] = useState(0);
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:3001/screenings/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/screenings/${id}`, {
       method: 'DELETE'
     })
     .then(res => {
@@ -55,7 +55,7 @@ const Upload = () => {
       };
     });
 
-    fetch("http://localhost:3001/screenings", {
+    fetch(`${process.env.REACT_APP_API_URL}/screenings`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(screeningObjects)
@@ -71,7 +71,7 @@ const Upload = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/check-auth', {
+    fetch(`${process.env.REACT_APP_API_URL}/check-auth`, {
     credentials: 'include',
     })
     .then(res => {
@@ -92,21 +92,21 @@ const Upload = () => {
 }, [navigate]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/movies")
+    fetch(`${process.env.REACT_APP_API_URL}/movies`)
       .then(res => res.json())
       .then(data => setMovies(data))
       .catch(err => console.error("Hiba a filmek lekérésekor:", err));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/rooms")
+    fetch(`${process.env.REACT_APP_API_URL}/rooms`)
       .then(res => res.json())
       .then(data => setRooms(data))
       .catch(err => console.error("Hiba a termek lekérésekor:", err));
   }, []);
 
   useEffect(() => {
-  fetch("http://localhost:3001/screenings")
+  fetch(`${process.env.REACT_APP_API_URL}/screenings`)
     .then(res => res.json())
     .then(data => {
       const sorted = [...data].sort((a, b) => {

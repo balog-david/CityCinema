@@ -9,7 +9,7 @@ const UploadedMovieList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:3001/check-auth', {
+        fetch(`${process.env.REACT_APP_API_URL}/check-auth`, {
         credentials: 'include',
         })
         .then(res => {
@@ -29,7 +29,7 @@ const UploadedMovieList = () => {
         });
     }, [navigate]);
 
-    const { data: movies, isPending, error } = useFetch('http://localhost:3001/movies');
+    const { data: movies, isPending, error } = useFetch(`${process.env.REACT_APP_API_URL}/movies`);
 
     if (!authChecked) return null;
     return ( 

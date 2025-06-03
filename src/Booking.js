@@ -30,7 +30,7 @@ const Booking = () => {
   };
   
   const currentWeek = getWeekDates(weekOffset);
-  const { data: screeningsDataRaw, isPending, error } = useFetch('http://192.168.1.79:3001/screenings');
+  const { data: screeningsDataRaw, isPending, error } = useFetch(`${process.env.REACT_APP_API_URL}/screenings`);
   const screeningsData = useMemo(() => screeningsDataRaw || [], [screeningsDataRaw]);
 
   useEffect(() => {

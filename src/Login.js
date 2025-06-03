@@ -8,7 +8,7 @@ const Login = () => {
     const location = useLocation();
 
     useEffect(() => {
-        fetch('http://localhost:3001/check-auth', {
+        fetch(`${process.env.REACT_APP_API_URL}/check-auth`, {
         credentials: 'include',
         })
         .then(res => {
@@ -47,7 +47,7 @@ const Login = () => {
         return;
     }
 
-    fetch('http://localhost:3001/login', {
+    fetch(`${process.env.REACT_APP_API_URL}/login`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

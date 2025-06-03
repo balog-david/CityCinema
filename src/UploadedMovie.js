@@ -13,7 +13,7 @@ const UploadedMovie = ({ movie }) => {
 
     const handleDelete = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3001/movies/${id}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/${id}`, {
                 method: "DELETE",
             });
             if (!res.ok) throw new Error('Hiba történt a törlés közben!');

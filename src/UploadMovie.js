@@ -17,7 +17,7 @@ const UploadMovie = () => {
     });
 
     useEffect(() => {
-        fetch('http://localhost:3001/check-auth', {
+        fetch(`${process.env.REACT_APP_API_URL}/check-auth`, {
           credentials: 'include',
         })
           .then(res => {
@@ -91,8 +91,8 @@ const UploadMovie = () => {
         };
 
         const url = isEditing
-            ? `http://localhost:3001/movies/${movie._id}`
-            : 'http://localhost:3001/movies';
+            ? `${process.env.REACT_APP_API_URL}/movies/${movie._id}`
+            : `${process.env.REACT_APP_API_URL}/movies`;
 
         const method = isEditing ? 'PATCH' : 'POST';
 
