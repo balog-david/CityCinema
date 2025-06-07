@@ -6,7 +6,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/logout`, {
+    fetch(`${process.env.REACT_APP_API_URL}/auth/logout`, {
       method: 'POST',
       credentials: 'include'
     })

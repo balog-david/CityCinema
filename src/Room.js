@@ -30,7 +30,7 @@ const Room = ({ screeningId }) => {
 
   console.log('Új screeningId-hez csatlakozás:', screeningId);
 
-  const socket = new WebSocket('ws://localhost:3001');
+  const socket = new WebSocket(process.env.REACT_APP_WS_URL);
   socketRef.current = socket;
 
   socket.onopen = () => {
