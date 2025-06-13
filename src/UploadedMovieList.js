@@ -9,7 +9,7 @@ const UploadedMovieList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem("token"); // vagy sessionStorage
+        const token = localStorage.getItem("token");
 
         fetch(`${process.env.REACT_APP_API_URL}/auth/check-auth`, {
             headers: {

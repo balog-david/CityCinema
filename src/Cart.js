@@ -103,7 +103,7 @@ const Cart = () => {
 
   if (isPending) return <p>Betöltés folyamatban...</p>;
   if (error) return <p>Hiba történt: {error}</p>;
-  if (!localTickets || localTickets.length === 0) return <p>Nincsenek jegyek.</p>;
+  if (!localTickets || localTickets.length === 0) return <p className="no-tickets">Nincsenek jegyek.</p>;
 
   return (
     <div className="ticket-container">

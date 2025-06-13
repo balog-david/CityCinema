@@ -206,9 +206,10 @@ const Upload = () => {
         ))}
         </div>
         
-
-        <button onClick={addRow} style={{ marginRight: "1em" }}>+ Új vetítés hozzáadása</button>
-        <button onClick={handleSubmit}>Feltöltés</button>
+        <div className="upload-buttons">
+          <button onClick={addRow}>+ Új vetítés hozzáadása</button>
+          <button onClick={handleSubmit}>Feltöltés</button>
+        </div>
       </div>    
   );
 };

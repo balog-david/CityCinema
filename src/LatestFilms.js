@@ -6,17 +6,25 @@ const LatestFilms = ({ films, title }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [slides, setSlides] = useState([films[0]]);
     const trackRef = useRef(null);
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
+    const touchRef = useRef(null);
 
     const handleRightClick = useCallback(() => {
         const nextIndex = (currentIndex + 1) % films.length;
         setSlides(prev => [...prev, films[nextIndex]]);
 
-        requestAnimationFrame(() => {
-            if (trackRef.current) {
-                trackRef.current.style.transition = 'transform 1s ease-in-out';
-                trackRef.current.style.transform = 'translateX(-100%)';
-            }
-        });
+        if (trackRef.current) {
+            trackRef.current.style.transition = 'none';
+            trackRef.current.style.transform = 'translateX(0)';
+            
+            // 🔧 Force reflow
+            void trackRef.current.offsetHeight;
+
+            // 🔄 Animáció beállítása
+            trackRef.current.style.transition = 'transform 1s ease-in-out';
+            trackRef.current.style.transform = 'translateX(-100%)';
+        }
 
         setTimeout(() => {
             setSlides(prev => prev.slice(1));
@@ -28,6 +36,7 @@ const LatestFilms = ({ films, title }) => {
         }, 1000);
     }, [currentIndex, films]);
 
+
     const handleLeftClick = useCallback(() => {
         const prevIndex = (currentIndex - 1 + films.length) % films.length;
         setSlides(prev => [films[prevIndex], ...prev]);
@@ -35,25 +44,57 @@ const LatestFilms = ({ films, title }) => {
         if (trackRef.current) {
             trackRef.current.style.transition = 'none';
             trackRef.current.style.transform = 'translateX(-100%)';
+
+            // 🔧 Force reflow
+            void trackRef.current.offsetHeight;
+
+            trackRef.current.style.transition = 'transform 1s ease-in-out';
+            trackRef.current.style.transform = 'translateX(0)';
         }
-
-        requestAnimationFrame(() => {
-            if (trackRef.current) {
-                trackRef.current.style.transition = 'transform 1s ease-in-out';
-                trackRef.current.style.transform = 'translateX(0)';
-            }
-        });
-
         setTimeout(() => {
             setSlides(prev => prev.slice(0, prev.length - 1));
             setCurrentIndex(prevIndex);
         }, 1000);
     }, [currentIndex, films]);
 
+
     const handleIndicatorClick = (index) => {
         setCurrentIndex(index);
         setSlides([films[index]]);
     };
+
+
+
+    useEffect(() => {
+        const touchArea = touchRef.current;
+        if (!touchArea) return;
+
+        const handleTouchStart = (e) => {
+            touchStartX.current = e.touches[0].clientX;
+        };
+
+        const handleTouchEnd = (e) => {
+            touchEndX.current = e.changedTouches[0].clientX;
+            const distance = touchStartX.current - touchEndX.current;
+
+            const threshold = 50;
+
+            if (distance > threshold) {
+                handleRightClick();
+            } else if (distance < -threshold) {
+                handleLeftClick();
+            }
+        };
+
+        touchArea.addEventListener('touchstart', handleTouchStart);
+        touchArea.addEventListener('touchend', handleTouchEnd);
+
+        return () => {
+            touchArea.removeEventListener('touchstart', handleTouchStart);
+            touchArea.removeEventListener('touchend', handleTouchEnd);
+        };
+    }, [handleLeftClick, handleRightClick]);
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -66,7 +107,7 @@ const LatestFilms = ({ films, title }) => {
     return (
         <div className="carousel-container">
             <h1>{title}</h1>
-            <div className="carousel-window">
+            <div className="carousel-window" ref={touchRef}>
                 <div className="carousel-track" ref={trackRef}>
                     {slides.map((film, idx) => (
                     <div className="carousel-slide" key={idx}>

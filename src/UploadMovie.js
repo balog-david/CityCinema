@@ -17,11 +17,11 @@ const UploadMovie = () => {
     });
 
     useEffect(() => {
-        const token = localStorage.getItem("token"); // vagy sessionStorage
+        const token = localStorage.getItem("token");
 
         fetch(`${process.env.REACT_APP_API_URL}/auth/check-auth`, {
             headers: {
-            Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
             },
         })
         .then(res => {
@@ -78,6 +78,7 @@ const UploadMovie = () => {
         const isEditing = Boolean(location.state && location.state.movie && location.state.movie._id);
         const requiredFields = ["title", "body", "author", "link", "description", "cast"];
         const hasEmptyField = requiredFields.some(field => String(movie[field] || "").trim() === "");
+        const token = localStorage.getItem("token");
 
         if (hasEmptyField || !imageFile) {
             alert("Minden mező, beleértve a képet is, kötelező!");
@@ -102,7 +103,9 @@ const UploadMovie = () => {
         fetch(url, {
             method,
             body: formData,
-            credentials: 'include'
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         })
         .then(res => res.json())
         .then(() => {
@@ -166,9 +169,7 @@ const UploadMovie = () => {
                     accept="image/*"
                     onChange={handleImageFileChange}
                 />
-                {movie.image && (
-                    <p style={{ marginTop: "5px" }}>Kiválasztott fájl: <strong>{movie.image}</strong></p>
-                )}
+                
             </div>
 
             <div className="form-group">

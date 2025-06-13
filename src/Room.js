@@ -11,7 +11,9 @@ const generateToken = () =>
   });
 
 const Room = ({ screeningId }) => {
+  const divRef = useRef(null);
   const [seats, setSeats] = useState([]);
+  const [seatSize, setSeatSize] = useState(0);
   const socketRef = useRef(null);
   const { data, isPending, error } = useFetch(`${process.env.REACT_APP_API_URL}/screenings/${screeningId}`);
   const [userToken] = useState(() => {
@@ -24,6 +26,26 @@ const Room = ({ screeningId }) => {
   });
 
   const { updateTicketCount } = useContext(ReservationContext);
+
+  useEffect(() => {
+    if (!seats.length) return;
+
+    const gap = 10;
+    const maxSeatsInRow = Math.max(...seats.map(row => row.length));
+    const moziWidth = divRef.current ? divRef.current.offsetWidth : 0;
+
+    const totalGap = (maxSeatsInRow + 1) * gap;
+    const availableWidth = moziWidth - totalGap;
+
+    const calculatedSeatWidth = maxSeatsInRow > 0
+      ? Math.floor(availableWidth / maxSeatsInRow)
+      : 0;
+
+    const maxSeatWidth = Math.min(calculatedSeatWidth, 40);
+
+    setSeatSize(maxSeatWidth);
+  }, [seats]);
+
 
   useEffect(() => {
   if (!screeningId) return;
@@ -179,7 +201,7 @@ useEffect(() => {
   if (error) return <p>Hiba: {error}</p>;
 
   return (
-    <div className="mozi">
+    <div className="mozi" ref={divRef}>
       <h2>{data?.roomName}</h2>
       {seats.map((row, rowIndex) => (
         <div className="sor" key={rowIndex}>
@@ -189,6 +211,10 @@ useEffect(() => {
               className={`szek ${seat.status} ${seat.reservedby === userToken ? 'sajat' : ''}`}
               title={`Szék: ${seat.id}`}
               onClick={() => handleSeatClick(rowIndex, seatIndex)}
+              style={{
+                width: `${seatSize}px`,
+                height: `${seatSize}px`,
+              }}
             >
               {seat.id}
             </div>

@@ -49,6 +49,7 @@ const BookingSummary = () => {
             console.log('Hiba:', error);
             alert('Nem sikerült elküldeni a rendelést!');
         });
+        localStorage.removeItem('userToken');
     };
 
     if (isSubmitted) {
